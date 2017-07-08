@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    canvas{
+      margin: 0 auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="500" height="500" style="background-color:#000;">
+  </canvas>
+  <script>
+    window.onload = function() {
+      var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        cirX = canvas.width/2,
+        cirY = canvas.height/2,
+        rad = Math.PI*2/100,
+        n = 1,
+        speed = 150,
+        r = 100;
+        function DreamLoading(){
+          // 画矩形
+          context.clearRect(0,0,canvas.width,canvas.height);
+          writeCircle();
+          writeText(n);
+          writeBlue(n);
+          if(n < 100){
+            n = n + 0.1;
+          }else{
+            n = 0;
+          }
+          window.requestAnimationFrame(DreamLoading);
+        }
+        function writeBlue(n){
+          context.save();
+          context.strokeStyle = '#49f';
+          context.lineWidth = 4;
+          context.beginPath();
+          context.arc(cirX,cirY,r,-Math.PI/2,-Math.PI/2+rad*n,false);
+          context.stroke();
+          context.restore();
+        }
+        function writeText(n){
+          context.save();
+          context.strokeStyle = '#49f';
+          context.font = '40px Arial';
+          // toFixed() 方法可把 Number 四舍五入为指定小数位数的数字 0表示不带小数点
+          context.strokeText(n.toFixed(0)+'%',cirX-30,cirY+10);
+          context.stroke();
+          context.restore();
+
+        }
+        function writeCircle(){
+          // 画一个圆
+          // stroke 边框
+          // 保存当前的绘制缓冲区
+          context.save();
+          context.beginPath();
+          context.strokeStyle = '#49f';
+          // context.arc(x,y,r,sAngle,eAngle,counterclockwise) sAngle 起始角 eAngle结束角
+          // counterclockwise false顺时针 true逆时针
+          context.arc(cirX,cirY,r,0,Math.PI*2,false);
+          // 画图
+          context.stroke();
+          context.restore();
+        }
+        DreamLoading();
+    }
+  </script>
+</body>
+</html>
